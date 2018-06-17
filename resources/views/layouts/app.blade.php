@@ -14,7 +14,15 @@
     <body>
       @include('inc.navbar')
       <div class="container soul-content">
+        @include('inc.messages')
         @yield('content')
       </div>
+
+      <!-- for laravel-ckeditor -->
+      <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+      <script>
+          CKEDITOR.replace( 'article-ckeditor' );
+      </script>
+      
     </body>
 </html>
