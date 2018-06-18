@@ -3,6 +3,7 @@
 @section('content')
   <a href="/posts" class="btn btn-outline-dark mb-3">Go Back</a>
   <h1>{{$post->title}}</h1>
+  <img class="mb-3" style="width: 100%;" src="/storage/cover_images/{{$post->cover_image}}" alt="">
   <div class="">
     <!-- those two !! parse HTML code, which is needed if we use laravel-ckeditor -->
     {!!$post->body!!}
@@ -19,6 +20,6 @@
         {{Form::hidden('_method', 'DELETE')}}
         {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
       {!!Form::close()!!}
-    @endif  
+    @endif
   @endif
 @endsection
