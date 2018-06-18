@@ -8,6 +8,19 @@ use App\Post; // connect with post
 
 class PostsController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // we need a few exceptions beacause we want
+        // that guests see posts but tthey should not change or create them
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -54,6 +67,7 @@ class PostsController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
         $post->save(); //save to DB
 
         // redirect
@@ -85,6 +99,11 @@ class PostsController extends Controller
     {
       // fetch data from DB as an object
       $post = Post::find($id);
+
+      // Check for correct user
+      if(auth()->user()->id !== $post->user_id){
+        return redirect('/posts')->with('error', 'Unauthorized Page');
+      }
 
       return view('posts.edit')->with('post', $post);
     }
@@ -121,6 +140,12 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::find($id);
+        
+        // Check for correct user
+        if(auth()->user()->id !== $post->user_id){
+          return redirect('/posts')->with('error', 'Unauthorized Page');
+        }
+
         $post->delete(); //delete from DB
 
         return redirect('/posts')->with('success', 'Post Removed');

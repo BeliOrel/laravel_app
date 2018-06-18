@@ -1,28 +1,45 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- if something is in public folder we can use asset -->
-        <link rel="stylesheet" href="{{asset('css/app.css')}}" />
-        <title>{{config('app.name', 'Laravel_App')}}</title>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
-    </head>
-    <body>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Scripts -->
+    <!--
+    word 'defer' causes problems with laravel-ckeditor -> remove it
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+
+    <!-- Styles -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
       @include('inc.navbar')
-      <div class="container soul-content">
-        @include('inc.messages')
-        @yield('content')
+      <div class="container">
+        <main class="py-4">
+          @include('inc.messages')
+          @yield('content')
+        </main>
       </div>
+    </div>
 
-      <!-- for laravel-ckeditor -->
-      <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
-      <script>
-          CKEDITOR.replace( 'article-ckeditor' );
-      </script>
-      
-    </body>
+    <!-- for laravel-ckeditor -->
+    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace( 'article-ckeditor' );
+    </script>
+
+</body>
 </html>
